@@ -16,6 +16,8 @@ public class User implements UserDetails {
     private boolean active;
 
     public User() {
+        balance = 0L;
+        email = "email";
     }
 
     public User(Long id, String username, String password, String email, Long balance, boolean active) {
@@ -109,5 +111,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isActive();
+    }
+
+    public boolean isAdmin() {
+        return false;
     }
 }

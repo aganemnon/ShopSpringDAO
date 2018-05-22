@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class UserMapper implements RowMapper<User> {
 
-    public static final String BASE_SQL
-            = "SELECT u.id, u.username, u.email, u.password, u.balance, u.active FROM users u ";
+        public static final String BASE_SQL
+                = "SELECT * FROM users ";
 
     @Override
     public User mapRow(ResultSet resultSet, int i) throws SQLException {

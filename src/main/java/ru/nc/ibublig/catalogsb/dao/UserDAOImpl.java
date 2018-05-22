@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class UserDAOImpl extends JdbcDaoSupport implements UserDAO{
+public class UserDAOImpl extends JdbcDaoSupport implements UserDAO {
 
     @Autowired
     public UserDAOImpl(@Qualifier("dataSource") DataSource dataSource) {
@@ -22,23 +22,27 @@ public class UserDAOImpl extends JdbcDaoSupport implements UserDAO{
     }
 
     @Override
-    public void saveOrUpdate(User user) {
-        if (user.getId() > 0) {
-            //Update user
-            String sql = "UPDATE user SET login=?, email=?, password=?, balance=?, active=? WHERE userID=?";
-            this.getJdbcTemplate().update(sql, user.getUsername(), user.getEmail(), user.getPassword(), user.getBalance(), user.isActive(), user.getId());
-        } else {
-            //Insert user
-            String sql = "INSERT INTO user (login, email, password, balance, active)"
-                    + " VALUES (?,?,?,?,?)";
-            this.getJdbcTemplate().update(sql,user.getUsername(),user.getEmail(),user.getPassword(),user.getBalance(), user.isActive());
-        }
+    public void saveUser(User user) {
+
+        Object[] params = new Object[]{
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getBalance(),
+                user.isActive(),
+        };
+
+        //Insert user
+        String sql = "INSERT INTO users (username, email, password, balance, active)"
+                + " VALUES (?,?,?,?,?)";
+        this.getJdbcTemplate().update(sql, params);
+
     }
 
     @Override
     public void delete(Long userID) {
-        String sql = "DELETE FROM user WHERE userID=?";
-        this.getJdbcTemplate().update(sql,userID);
+        String sql = "DELETE FROM users WHERE id=?";
+        this.getJdbcTemplate().update(sql, userID);
     }
 
     @Override
@@ -47,39 +51,40 @@ public class UserDAOImpl extends JdbcDaoSupport implements UserDAO{
 
         Object[] params = new Object[]{};
         UserMapper userMapper = new UserMapper();
-        List<User> userList = this.getJdbcTemplate().query(sql,params,userMapper);
+        List<User> userList = this.getJdbcTemplate().query(sql, params, userMapper);
 
         return userList;
     }
 
     @Override
     public User findByUsername(String username) {
-        String sql = UserMapper.BASE_SQL + "WHERE u.username=" + username;
-
-        Object[] params = new Object[]{ username };
+        String sql = UserMapper.BASE_SQL + "WHERE username=?";
+        System.out.println(sql);
+        Object[] params = new Object[]{username};
         UserMapper mapper = new UserMapper();
         try {
-            User user = this.getJdbcTemplate().queryForObject(sql,params,mapper);
+            User user = this.getJdbcTemplate().queryForObject(sql, params, mapper);
             return user;
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
     @Override
     public User get(Long userID) {
-        String sql = UserMapper.BASE_SQL + "WHERE u.id=" + userID;
+        String sql = UserMapper.BASE_SQL + "WHERE id=" + userID;
 
-        Object[] params = new Object[]{ userID };
+        Object[] params = new Object[]{userID};
         UserMapper mapper = new UserMapper();
         try {
-            User user = this.getJdbcTemplate().queryForObject(sql,params,mapper);
+            User user = this.getJdbcTemplate().queryForObject(sql, params, mapper);
             return user;
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
-    private User setUser(ResultSet resultSet){
+
+    private User setUser(ResultSet resultSet) {
         User user = new User();
         try {
             user.setId(resultSet.getLong("id"));
