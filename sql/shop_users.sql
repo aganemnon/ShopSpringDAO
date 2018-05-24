@@ -1,0 +1,2 @@
+INSERT INTO shop.users (username, email, password, balance, active) VALUES ('t', 't', 't', 1, 1);
+INSERT INTO shop.users (username, email, password, balance, active) VALUES ('test', 'email', 'test', 0, 1);
