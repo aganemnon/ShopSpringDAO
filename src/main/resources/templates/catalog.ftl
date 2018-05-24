@@ -21,7 +21,9 @@
         <div class="form-group col-md-3">
             <select id="inputState" name="category" class="form-control">
                 <option selected>Выберете категорию</option>
-                <option>...</option>
+                <#list categories as category>
+                    <option>${category.name}</option>
+                </#list>
             </select>
         </div>
         <div class="form-group">
@@ -34,12 +36,18 @@
     </div>
 </form>
 
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="/img/1.jpg" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
+<div class="card-columns">
+        <#list items as item>
+            <div class="card">
+                <#if item.image??>
+                <img class="card-img-top" src="img/${item.image}">
+                </#if>
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <p class="card-text"><small class="text-muted">Cost: ${item.cost/100}$</small></p>
+                </div>
+            </div>
+        </#list>
 </div>
 </@c.page>

@@ -7,16 +7,18 @@ public class Item {
     private String description;
     private Long cost;
     private String image;
+    private Long categoryId;
 
     public Item() {
     }
 
-    public Item(Long id, String name, String description, Long cost, String image) {
+    public Item(Long id, String name, String description, Long cost, String image, Long categoryId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.cost = cost;
         this.image = image;
+        this.categoryId = categoryId;
     }
 
     public Long getId() {
@@ -57,5 +59,13 @@ public class Item {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

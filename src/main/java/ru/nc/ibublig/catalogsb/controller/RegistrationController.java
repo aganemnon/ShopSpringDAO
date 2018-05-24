@@ -32,13 +32,6 @@ public class RegistrationController {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
 
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getEmail());
-        System.out.println(user.getBalance());
-        System.out.println(user.getRoles());
-        System.out.println(user.isActive());
-
         userDAO.saveUser(user);
 
         return "redirect:/login";

@@ -1,20 +1,16 @@
 package ru.nc.ibublig.catalogsb.model;
 
-import java.util.List;
-
-public class Catalog {
+public class Categories {
 
     private Long id;
     private String name;
-    private List<Item> items;
 
-    public Catalog() {
+    public Categories() {
     }
 
-    public Catalog(Long id, String name, List<Item> items) {
+    public Categories(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.items = items;
     }
 
     public Long getId() {
@@ -31,13 +27,5 @@ public class Catalog {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 }
