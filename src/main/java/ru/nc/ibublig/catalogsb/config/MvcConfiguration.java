@@ -1,5 +1,6 @@
 package ru.nc.ibublig.catalogsb.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 public class MvcConfiguration implements WebMvcConfigurer {
 
+    @Value("${upload.path}")
+    private String uploadPath;
     @Bean
     public ViewResolver getViewResolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -25,7 +28,8 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("file://" + uploadPath + "/");
     }
 
     public void addViewControllers(ViewControllerRegistry registry){
