@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import ru.nc.ibublig.catalogsb.dao.CatalogDAO;
+import ru.nc.ibublig.catalogsb.dao.CategoryDAO;
 import ru.nc.ibublig.catalogsb.dao.ItemDAO;
-import ru.nc.ibublig.catalogsb.model.Categories;
+import ru.nc.ibublig.catalogsb.model.Category;
 import ru.nc.ibublig.catalogsb.model.Item;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class CatalogController {
     private ItemDAO itemDAO;
 
     @Autowired
-    private CatalogDAO catalogDAO;
+    private CategoryDAO categoryDAO;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -32,7 +32,7 @@ public class CatalogController {
     @GetMapping("/catalog")
     public String catalog(Map<String, Object> model) {
         Iterable<Item> items = itemDAO.list();
-        Iterable<Categories> categories = catalogDAO.list();
+        Iterable<Category> categories = categoryDAO.list();
 
         model.put("items", items);
         model.put("categories", categories);
@@ -47,9 +47,9 @@ public class CatalogController {
             @RequestParam String category,
             @RequestParam("file") MultipartFile file,
             Map<String, Object> model) throws IOException {
-        Long categoryId = catalogDAO.getIdByName(category);
-        Item item = new Item(1L, name, description, Long.parseLong(cost) * 100, file.getName(), categoryId);
-        if (file != null) {
+        Long categoryId = categoryDAO.getIdByName(category);
+        Item item = new Item(1L, name, description, Long.parseLong(cost) * 100, null, categoryId);
+        if (!file.isEmpty()) {
             File uploadDir = new File(uploadPath);
 
             if (!uploadDir.exists()) {
@@ -66,7 +66,7 @@ public class CatalogController {
         itemDAO.addItem(item);
 
         Iterable<Item> items = itemDAO.list();
-        Iterable<Categories> categories = catalogDAO.list();
+        Iterable<Category> categories = categoryDAO.list();
 
         model.put("items", items);
         model.put("categories", categories);

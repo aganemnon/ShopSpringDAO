@@ -1,14 +1,14 @@
 package ru.nc.ibublig.catalogsb.model;
 
-public class Categories {
+public class Category {
 
     private Long id;
     private String name;
 
-    public Categories() {
+    public Category() {
     }
 
-    public Categories(Long id, String name) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -3,9 +3,9 @@
 
 <@c.page>
 <div class="btn-group mb-5" role="group">
-    <a class="btn" href="#">Link</a>
-    <a class="btn" href="#">Link</a>
-    <a class="btn" href="#">Link</a>
+    <#list categories as category>
+    <a class="btn" href="/catalog/${category.id}">${category.name}</a>
+    </#list>
 </div>
 <form method="post" enctype="multipart/form-data" class="mb-5">
     <div class="form-row">
