@@ -42,4 +42,16 @@ public class AppRoleDAO extends JdbcDaoSupport {
         this.getJdbcTemplate().update(sql, params);
     }
 
+    public void updateRole(Long userId, Long role_id) {
+        Object[] params = new Object[]{
+                role_id,
+                userId
+        };
+
+        //Update user
+        String sql = "UPDATE user_role"
+                + " SET role_id = ?"
+                + " WHERE user_id = ?";
+        this.getJdbcTemplate().update(sql, params);
+    }
 }

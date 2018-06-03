@@ -9,6 +9,7 @@ import java.util.Collection;
 public class AppUser implements UserDetails {
 
     public static final Long ROLE_USER = 2L;
+    public static final Long ROLE_ADMIN = 1L;
 
     private Long userId;
     private String userName;

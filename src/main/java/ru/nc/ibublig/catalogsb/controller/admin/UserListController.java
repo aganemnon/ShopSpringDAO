@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.nc.ibublig.catalogsb.dao.AppRoleDAO;
 import ru.nc.ibublig.catalogsb.dao.AppUserDAO;
+import ru.nc.ibublig.catalogsb.model.AppUser;
 
 import java.util.Map;
 
@@ -43,7 +44,11 @@ public class UserListController {
         } else {
             appUserDAO.updateUser(userId,username,password);
         }
-
+        if (role.equals("ROLE_ADMIN")){
+            roleDAO.updateRole(userId,AppUser.ROLE_ADMIN);
+        } else {
+            roleDAO.updateRole(userId, AppUser.ROLE_USER);
+        }
         model.put("users", appUserDAO.listUserAccount());
         return "redirect:/userlist";
     }
