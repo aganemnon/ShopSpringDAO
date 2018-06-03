@@ -2,12 +2,23 @@
 
 
 <@c.page>
-<div class="btn-group mb-5" role="group">
+<h5>Категории</h5>
+<div class="btn-group mb-1" role="group">
     <#list categories as category>
     <a class="btn" href="/catalog/${category.id}">${category.name}</a>
     </#list>
 </div>
+<form>
+    <h5>Поиск</h5>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Button</button>
+        </div>
+    </div>
+</form>
 <form method="post" enctype="multipart/form-data" class="mb-5">
+    <h5>Добавить товар</h5>
     <div class="form-row">
         <div class="col">
             <input type="text" name="name" class="form-control" placeholder="Название товара">

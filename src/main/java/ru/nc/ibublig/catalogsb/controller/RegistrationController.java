@@ -4,17 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.nc.ibublig.catalogsb.dao.UserDAOImpl;
-import ru.nc.ibublig.catalogsb.model.Role;
-import ru.nc.ibublig.catalogsb.model.User;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.nc.ibublig.catalogsb.dao.AppRoleDAO;
+import ru.nc.ibublig.catalogsb.dao.AppUserDAO;
+import ru.nc.ibublig.catalogsb.model.AppUser;
 
-import java.util.Collections;
 import java.util.Map;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    private UserDAOImpl userDAO;
+    private AppUserDAO userDAO;
+    @Autowired
+    private AppRoleDAO roleDAO;
 
     @GetMapping("/registration")
     public String registration(){
@@ -22,17 +24,20 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registrationUser(User user, Map<String, Object> model){
-        User userFromDB = userDAO.findByUsername(user.getUsername());
+    public String registrationUser(
+            @RequestParam String username,
+            @RequestParam String password,
+            Map<String, Object> model){
+        AppUser userFromDB = userDAO.findUserAccount(username);
         if (userFromDB != null){
             model.put("message", "Попробуйте другой логин");
             return "registration";
         }
 
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        userDAO.saveUser(new AppUser(username,password,true));
+        AppUser appUser = userDAO.findUserAccount(username);
 
-        userDAO.saveUser(user);
+        roleDAO.setRole(appUser.getUserId(), appUser.ROLE_USER);
 
         return "redirect:/login";
     }

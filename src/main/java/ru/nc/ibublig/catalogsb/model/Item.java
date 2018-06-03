@@ -21,6 +21,14 @@ public class Item {
         this.categoryId = categoryId;
     }
 
+    public Item(String name, String description, Long cost, String image, Long categoryId) {
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
+        this.image = image;
+        this.categoryId = categoryId;
+    }
+
     public Long getId() {
         return id;
     }

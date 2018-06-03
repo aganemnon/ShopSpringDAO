@@ -48,7 +48,7 @@ public class CatalogController {
             @RequestParam("file") MultipartFile file,
             Map<String, Object> model) throws IOException {
         Long categoryId = categoryDAO.getIdByName(category);
-        Item item = new Item(1L, name, description, Long.parseLong(cost) * 100, null, categoryId);
+        Item item = new Item( name, description, (long) (Double.parseDouble(cost)*100), null, categoryId);
         if (!file.isEmpty()) {
             File uploadDir = new File(uploadPath);
 
