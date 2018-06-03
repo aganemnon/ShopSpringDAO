@@ -25,6 +25,10 @@
             </li>
         </ul>
         <div class="navbar-text mr-3">${name}</div>
-        <@l.logout />
+        <#if button>
+            <@l.logout />
+        <#else>
+            <@l.loginn />
+        </#if>
     </div>
 </nav>

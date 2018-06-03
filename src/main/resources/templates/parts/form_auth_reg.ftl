@@ -9,14 +9,17 @@
         <input type="password" name="password" class="form-control"placeholder="Password">
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}">
-    <button type="submit" class="btn btn-primary"><#if isRegisterForm>Sing In<#else>Log In</#if></button>
-    <#if !isRegisterForm><a href="/registration">Sing In</a> </#if>
+    <button type="submit" class="btn btn-primary"><#if isRegisterForm>Registration<#else>Log In</#if></button>
+    <#if !isRegisterForm><a href="/registration">Registration</a> </#if>
 </form>
 </#macro>
 
 <#macro logout>
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <button type="submit" class="btn btn-primary">Log Out</button>
+        <button type="submit" class="btn btn-primary">Logout</button>
     </form>
+</#macro>
+<#macro loginn>
+           <a href="/login"><button type="submit" class="btn btn-primary">Login</button></a>
 </#macro>
