@@ -39,38 +39,5 @@ public class CatalogController {
         return "catalog";
     }
 
-    @PostMapping("/catalog")
-    public String addItem(
-            @RequestParam String name,
-            @RequestParam String description,
-            @RequestParam String cost,
-            @RequestParam String category,
-            @RequestParam("file") MultipartFile file,
-            Map<String, Object> model) throws IOException {
-        Long categoryId = categoryDAO.getIdByName(category);
-        Item item = new Item( name, description, (long) (Double.parseDouble(cost)*100), null, categoryId);
-        if (!file.isEmpty()) {
-            File uploadDir = new File(uploadPath);
 
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
-
-            item.setImage(resultFileName);
-        }
-        itemDAO.addItem(item);
-
-        Iterable<Item> items = itemDAO.list();
-        Iterable<Category> categories = categoryDAO.list();
-
-        model.put("items", items);
-        model.put("categories", categories);
-
-        return "catalog";
-    }
 }

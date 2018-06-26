@@ -30,6 +30,8 @@ public class MvcConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**")
                 .addResourceLocations("file://" + uploadPath + "/");
+        registry.addResourceHandler("/img_a/**")
+                .addResourceLocations("classpath:/templates/img_a/");
     }
 
     public void addViewControllers(ViewControllerRegistry registry){

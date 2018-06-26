@@ -17,35 +17,7 @@
         </div>
     </div>
 </form>
-<form method="post" enctype="multipart/form-data" class="mb-5">
-    <h5>Добавить товар</h5>
-    <div class="form-row">
-        <div class="col">
-            <input type="text" name="name" class="form-control" placeholder="Название товара">
-        </div>
-        <div class="col">
-            <input type="text" name="description" class="form-control" placeholder="Описание">
-        </div>
-        <div class="col">
-            <input type="text" name="cost" class="form-control" placeholder="Цена">
-        </div>
-        <div class="form-group col-md-3">
-            <select id="inputState" name="category" class="form-control">
-                <option selected>Выберете категорию</option>
-                <#list categories as category>
-                    <option>${category.name}</option>
-                </#list>
-            </select>
-        </div>
-        <div class="form-group">
-            <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
-        </div>
-        <div class="col">
-            <input type="hidden" name="_csrf" value="${_csrf.token}">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-</form>
+
 
 <div class="card-columns">
         <#list items as item>
