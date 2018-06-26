@@ -34,6 +34,15 @@ public class CatalogListController {
         model.put("categories", categoryDAO.list());
         return "admin/cataloglist";
     }
+    @GetMapping("addcategory")
+    public String addCategory(){
+        return "admin/addcategory";
+    }
+    @PostMapping("addcategory")
+    public String addCategory(@RequestParam String name){
+        categoryDAO.addCategory(name);
+        return "redirect:/cataloglist";
+    }
     @GetMapping("{categoryId}")
     public String catalogList(@PathVariable Long categoryId, Map<String,Object> model){
         model.put("items", itemDAO.getByIdCategory(categoryId));
@@ -43,11 +52,33 @@ public class CatalogListController {
 
     @GetMapping("editcategory/{categoryId}")
     public String editCategory(@PathVariable Long categoryId, Map<String,Object> model){
+        model.put("items", itemDAO.getByIdCategory(categoryId));
+        model.put("category", categoryDAO.getCategoryById(categoryId));
         return "admin/editcategory";
+    }
+    @PostMapping("editcategory/{categoryId}")
+    public String editCategory(@PathVariable Long categoryId,
+                               @RequestParam String name){
+        categoryDAO.setNameById(categoryId, name);
+        return "redirect:/cataloglist";
     }
     @GetMapping("edititem/{itemId}")
     public String editItem(@PathVariable Long itemId, Map<String,Object> model){
+        Item item = itemDAO.getById(itemId);
+        model.put("selectCategory", categoryDAO.getCategoryById(item.getCategoryId()));
+        model.put("categories", categoryDAO.list());
+        model.put("item", item);
         return "admin/edititem";
+    }
+    @PostMapping("edititem/{itemId}")
+    public String editItem(@PathVariable Long itemId,
+                           @RequestParam String name,
+                           @RequestParam String description,
+                           @RequestParam String cost,
+                           @RequestParam String category,
+                           @RequestParam("file") MultipartFile file,
+                           Map<String, Object> model){
+        return "redirect:/cataloglist";
     }
     @PostMapping
     public String addItem(

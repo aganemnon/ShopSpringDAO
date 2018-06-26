@@ -18,7 +18,7 @@ public class CategoryDAO extends JdbcDaoSupport {
     }
 
     public Long getIdByName(String nameCategory) {
-        String sql = "SELECT * FROM category WHERE name=?";
+        String sql = CategoryMapper.BASE_SQL + " WHERE name=?";
         Object[] params = new Object[]{nameCategory};
         CategoryMapper mapper = new CategoryMapper();
         Category category = this.getJdbcTemplate().queryForObject(sql, params, mapper);
@@ -31,5 +31,31 @@ public class CategoryDAO extends JdbcDaoSupport {
         CategoryMapper categoryMapper = new CategoryMapper();
         List<Category> categories = this.getJdbcTemplate().query(sql, params, categoryMapper);
         return categories;
+    }
+    public Category getCategoryById(Long id){
+        String sql = CategoryMapper.BASE_SQL + " WHERE id = ?";
+        Object[] params = new Object[]{
+                id
+        };
+        CategoryMapper categoryMapper = new CategoryMapper();
+        Category category = this.getJdbcTemplate().queryForObject(sql,params,categoryMapper);
+        return category;
+    }
+
+    public void setNameById(Long categoryId, String name) {
+        String sql = "UPDATE category SET name = ? WHERE id = ?";
+        Object[] params = new Object[]{
+                name,
+                categoryId
+        };
+
+        this.getJdbcTemplate().update(sql, params);
+    }
+
+    public void addCategory(String name) {
+        String sql = "INSERT INTO category (name)"
+                + " VALUES (?)";
+        Object[] params = new Object[]{name};
+        this.getJdbcTemplate().update(sql,params);
     }
 }

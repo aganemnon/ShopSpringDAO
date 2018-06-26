@@ -48,4 +48,14 @@ public class ItemDAO extends JdbcDaoSupport {
         List<Item> items = this.getJdbcTemplate().query(sql,params,itemMapper);
         return  items;
     }
+
+    public Item getById(Long itemId) {
+        String sql = ItemMapper.BASE_SQL + " WHERE id = ?";
+        Object[] params = new Object[]{
+                itemId
+        };
+        ItemMapper itemMapper = new ItemMapper();
+        Item item = this.getJdbcTemplate().queryForObject(sql,params,itemMapper);
+        return  item;
+    }
 }

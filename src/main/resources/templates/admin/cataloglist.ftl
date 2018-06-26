@@ -5,6 +5,7 @@
 <div class="row">
     <div class="col-4 col-md-2">
         <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="/cataloglist">Все категории</a></li>
             <#list categories as category>
                 <li class="list-group-item">
                     <a href="/cataloglist/${category.id}">${category.name} </a>
@@ -45,7 +46,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
+                            <input type="file" name="file" class="form-control-file">
                         </div>
                         <div class="col">
                             <input type="hidden" name="_csrf" value="${_csrf.token}">
