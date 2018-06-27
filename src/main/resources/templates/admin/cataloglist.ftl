@@ -27,6 +27,11 @@
             <div class="col-md-9">
                 <form method="post" enctype="multipart/form-data" class="mb-5">
                     <h5>Добавить товар</h5>
+                    <#if error??>
+                        <div class="alert alert-danger" role="alert">
+                            ${error}
+                        </div>
+                    </#if>
                     <div class="form-row">
                         <div class="col">
                             <input type="text" name="name" class="form-control" placeholder="Название товара">

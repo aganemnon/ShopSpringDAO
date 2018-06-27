@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.nc.ibublig.catalogsb.dao.CategoryDAO;
 import ru.nc.ibublig.catalogsb.dao.ItemDAO;
-import ru.nc.ibublig.catalogsb.model.Category;
 import ru.nc.ibublig.catalogsb.model.Item;
 
 import java.io.File;
@@ -107,28 +106,51 @@ public class CatalogListController {
             @RequestParam String category,
             @RequestParam("file") MultipartFile file,
             Map<String, Object> model) throws IOException {
-        Long categoryId = categoryDAO.getIdByName(category);
-        Item item = new Item( name, description, (long) (Double.parseDouble(cost)*100), null, categoryId);
-        if (!file.isEmpty()) {
-            File uploadDir = new File(uploadPath);
+        if (cost.contains(",")){
+            cost = cost.replace(",",".");
+        }
+        if (name.equals("") || description.equals("") || cost.equals("") || category.equals("")){
+            model.put("error","Нужно заполнить все поля");
+            model.put("items", itemDAO.list());
+            model.put("categories", categoryDAO.list());
+            return "admin/cataloglist";
+        } else {
+            if (validateDouble(cost)){
+                Long categoryId = categoryDAO.getIdByName(category);
+                Item item = new Item(name, description, (long) (Double.parseDouble(cost)*100), null, categoryId);
+                if (!file.isEmpty()) {
+                    File uploadDir = new File(uploadPath);
 
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                    if (!uploadDir.exists()) {
+                        uploadDir.mkdir();
+                    }
+
+                    String uuidFile = UUID.randomUUID().toString();
+                    String resultFileName = uuidFile + "." + file.getOriginalFilename();
+
+                    file.transferTo(new File(uploadPath + "/" + resultFileName));
+
+                    item.setImage(resultFileName);
+                }
+                itemDAO.addItem(item);
+
+                return "redirect:/cataloglist";
+            } else {
+                model.put("error","Цена должна содержать только цифры");
+                model.put("items", itemDAO.list());
+                model.put("categories", categoryDAO.list());
+                return "admin/cataloglist";
             }
 
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
-
-            item.setImage(resultFileName);
         }
-        itemDAO.addItem(item);
-
-        return "redirect:/cataloglist";
     }
 
-    private Double validateDouble(){
-        return 1.0D;
+    private boolean validateDouble(String cost){
+        try {
+            double d = Double.parseDouble(cost)*100;
+        } catch (NumberFormatException e){
+            return false;
+        }
+        return true;
     }
 }
