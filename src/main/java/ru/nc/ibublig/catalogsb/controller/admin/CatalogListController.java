@@ -127,4 +127,8 @@ public class CatalogListController {
 
         return "redirect:/cataloglist";
     }
+
+    private Double validateDouble(){
+        return 1.0D;
+    }
 }
