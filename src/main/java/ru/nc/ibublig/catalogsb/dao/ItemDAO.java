@@ -73,4 +73,9 @@ public class ItemDAO extends JdbcDaoSupport {
         this.getJdbcTemplate().update(sql, params);
     }
 
+    public void removeById(Long itemId) {
+        String sql = "DELETE FROM item WHERE id = ?";
+        Object[] params = new Object[]{itemId};
+        this.getJdbcTemplate().update(sql,params);
+    }
 }

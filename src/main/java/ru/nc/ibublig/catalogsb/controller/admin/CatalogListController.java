@@ -70,6 +70,11 @@ public class CatalogListController {
         model.put("item", item);
         return "admin/edititem";
     }
+    @GetMapping("remove/{itemId}")
+    public String removeItem(@PathVariable Long itemId){
+        itemDAO.removeById(itemId);
+        return "redirect:/cataloglist";
+    }
     @PostMapping("edititem/{itemId}")
     public String editItem(@PathVariable Long itemId,
                            @RequestParam String name,

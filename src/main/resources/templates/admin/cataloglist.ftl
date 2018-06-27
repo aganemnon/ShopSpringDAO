@@ -65,9 +65,14 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h5 class="card-title col-6">${item.name}</h5>
-                        <a href="/cataloglist/edititem/${item.id}" class="col col-2">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </a>
+                        <div class="col col-2">
+                            <a href="/cataloglist/edititem/${item.id}">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </a>
+                            <a href="/cataloglist/remove/${item.id}">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </div>
                     </div>
                     <p class="card-text">${item.description}</p>
                     <p class="card-text">
