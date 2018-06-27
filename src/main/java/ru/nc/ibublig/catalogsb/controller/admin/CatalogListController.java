@@ -77,7 +77,21 @@ public class CatalogListController {
                            @RequestParam String cost,
                            @RequestParam String category,
                            @RequestParam("file") MultipartFile file,
-                           Map<String, Object> model){
+                           Map<String, Object> model) throws IOException {
+        Long categoryId = categoryDAO.getIdByName(category);
+        Item item = new Item( name, description, (long) (Double.parseDouble(cost)*100), null, categoryId);
+        item.setId(itemId);
+        if (!file.isEmpty()) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadPath + "/" + resultFileName));
+            item.setImage(resultFileName);
+        }
+        itemDAO.saveItem(item);
         return "redirect:/cataloglist";
     }
     @PostMapping
@@ -106,12 +120,6 @@ public class CatalogListController {
         }
         itemDAO.addItem(item);
 
-        Iterable<Item> items = itemDAO.list();
-        Iterable<Category> categories = categoryDAO.list();
-
-        model.put("items", items);
-        model.put("categories", categories);
-
-        return "admin/cataloglist";
+        return "redirect:/cataloglist";
     }
 }

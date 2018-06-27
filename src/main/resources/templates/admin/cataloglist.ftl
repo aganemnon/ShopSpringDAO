@@ -64,7 +64,7 @@
                 </#if>
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h5 class="card-title col-4">${item.name}</h5>
+                        <h5 class="card-title col-6">${item.name}</h5>
                         <a href="/cataloglist/edititem/${item.id}" class="col col-2">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a>

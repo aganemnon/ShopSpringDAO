@@ -58,4 +58,19 @@ public class ItemDAO extends JdbcDaoSupport {
         Item item = this.getJdbcTemplate().queryForObject(sql,params,itemMapper);
         return  item;
     }
+
+    public void saveItem(Item item) {
+        String sql = "UPDATE item SET name = ?, description = ?, cost = ?, image = ?, category_id = ? WHERE id = ?";
+        Object[] params = new Object[]{
+                item.getName(),
+                item.getDescription(),
+                item.getCost(),
+                item.getImage(),
+                item.getCategoryId(),
+                item.getId()
+        };
+
+        this.getJdbcTemplate().update(sql, params);
+    }
+
 }

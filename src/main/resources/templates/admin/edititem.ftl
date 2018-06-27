@@ -12,7 +12,7 @@
             <input type="text" name="description" class="form-control" value="${item.description}">
         </div>
         <div class="col">
-            <input type="text" name="cost" class="form-control" value="${item.cost}">
+            <input type="text" name="cost" class="form-control" value="${item.cost/100}">
         </div>
         <div class="form-group col-md-3">
             <select id="inputState" name="category" class="form-control">
