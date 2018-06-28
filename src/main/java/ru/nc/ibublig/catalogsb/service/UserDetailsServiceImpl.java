@@ -46,7 +46,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), //
                 appUser.getEncryptedPassword(), grantList);
-
         return userDetails;
     }
 

@@ -1,5 +1,10 @@
 <#macro login path isRegisterForm>
 <form action="${path}" method="post">
+    <#if RequestParameters.error??>
+    <div class="alert alert-warning" role="alert">
+        Логин или пароль введены неверно!!
+    </div>
+    </#if>
     <div class="form-group">
         <label>Login</label>
         <input type="text" name="username" class="form-control" placeholder="Enter username">

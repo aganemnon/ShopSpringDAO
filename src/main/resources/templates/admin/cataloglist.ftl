@@ -28,8 +28,8 @@
                 <form method="post" enctype="multipart/form-data" class="mb-5">
                     <h5>Добавить товар</h5>
                     <#if error??>
-                        <div class="alert alert-danger" role="alert">
-                            ${error}
+                        <div class="alert alert-warning" role="alert">
+                            ${error};
                         </div>
                     </#if>
                     <div class="form-row">
@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <select id="inputState" name="category" class="form-control">
-                                <option selected>Выберете категорию</option>
+                                <option value="-1" selected>Выберете категорию</option>
                 <#list categories as category>
                     <option>${category.name}</option>
                 </#list>

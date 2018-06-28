@@ -53,6 +53,7 @@ public class CatalogListController {
     public String editCategory(@PathVariable Long categoryId, Map<String,Object> model){
         model.put("items", itemDAO.getByIdCategory(categoryId));
         model.put("category", categoryDAO.getCategoryById(categoryId));
+        model.put("categories", categoryDAO.list());
         return "admin/editcategory";
     }
     @PostMapping("editcategory/{categoryId}")
@@ -67,6 +68,8 @@ public class CatalogListController {
         model.put("selectCategory", categoryDAO.getCategoryById(item.getCategoryId()));
         model.put("categories", categoryDAO.list());
         model.put("item", item);
+        Double cost = (double) item.getCost()/100;
+        model.put("cost", cost.toString().replace(",","."));
         return "admin/edititem";
     }
     @GetMapping("remove/{itemId}")
@@ -98,6 +101,22 @@ public class CatalogListController {
         itemDAO.saveItem(item);
         return "redirect:/cataloglist";
     }
+    @PostMapping("editcategory/remove/{categoryId}")
+    public String removeCategory(@PathVariable Long categoryId,
+                                 @RequestParam String newCategory,
+                                 Map<String, Object> model){
+        if (newCategory.equals("-1")){
+            model.put("error_r", "Выберите категорию");
+            model.put("items", itemDAO.getByIdCategory(categoryId));
+            model.put("category", categoryDAO.getCategoryById(categoryId));
+            model.put("categories", categoryDAO.list());
+            return "admin/editcategory";
+        } else {
+            itemDAO.setNewCategoryById(categoryId, newCategory);
+            categoryDAO.removeById(categoryId);
+        }
+        return "redirect:/cataloglist";
+    }
     @PostMapping
     public String addItem(
             @RequestParam String name,
@@ -109,7 +128,7 @@ public class CatalogListController {
         if (cost.contains(",")){
             cost = cost.replace(",",".");
         }
-        if (name.equals("") || description.equals("") || cost.equals("") || category.equals("")){
+        if (name.equals("") || description.equals("") || cost.equals("") || category.equals("-1")){
             model.put("error","Нужно заполнить все поля");
             model.put("items", itemDAO.list());
             model.put("categories", categoryDAO.list());
@@ -136,7 +155,7 @@ public class CatalogListController {
 
                 return "redirect:/cataloglist";
             } else {
-                model.put("error","Цена должна содержать только цифры");
+                model.put("error","Цена должна содержать только положительные цифры");
                 model.put("items", itemDAO.list());
                 model.put("categories", categoryDAO.list());
                 return "admin/cataloglist";
@@ -148,6 +167,9 @@ public class CatalogListController {
     private boolean validateDouble(String cost){
         try {
             double d = Double.parseDouble(cost)*100;
+            if (d<0.1d){
+                return false;
+            }
         } catch (NumberFormatException e){
             return false;
         }

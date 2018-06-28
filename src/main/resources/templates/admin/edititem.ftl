@@ -12,13 +12,12 @@
             <input type="text" name="description" class="form-control" value="${item.description}">
         </div>
         <div class="col">
-            <input type="text" name="cost" class="form-control" value="${item.cost/100}">
+            <input type="text" name="cost" class="form-control" value="${cost}">
         </div>
         <div class="form-group col-md-3">
             <select id="inputState" name="category" class="form-control">
-                <option selected>${selectCategory.name}</option>
                 <#list categories as category>
-                    <option>${category.name}</option>
+                    <option <#if selectCategory.name == (category.name)>selected</#if>>${category.name}</option>
                 </#list>
             </select>
         </div>
@@ -28,6 +27,7 @@
         <div class="col">
             <input type="hidden" name="_csrf" value="${_csrf.token}">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/cataloglist" class="btn btn-primary">Cancel</a>
         </div>
     </div>
 </form>

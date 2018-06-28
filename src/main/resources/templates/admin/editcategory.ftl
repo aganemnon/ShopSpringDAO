@@ -12,6 +12,28 @@
           </div>
       </div>
   </form>
+<form action="/cataloglist/editcategory/remove/${category.id}" method="post">
+    <p>Удалеть категорию</p>
+    <p>Выберите категорию куда будет перемещен удаленный товар</p>
+                    <#if error_r??>
+                        <div class="alert alert-danger" role="alert">
+                            ${error_r}
+                        </div>
+                    </#if>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Категория</label>
+        </div>
+        <select name="newCategory" class="custom-select">
+            <option selected value="-1">Choose...</option>
+            <#list categories as category1>
+                <option value="${category1.id}">${category1.name}</option>
+            </#list>
+        </select>
+    </div>
+    <input type="hidden" name="_csrf" value="${_csrf.token}">
+    <button type="submit">Удалить</button>
+</form>
 
 <div class="card-columns">
         <#list items as item>

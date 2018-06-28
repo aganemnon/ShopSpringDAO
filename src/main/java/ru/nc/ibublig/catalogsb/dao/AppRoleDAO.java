@@ -1,6 +1,7 @@
 package ru.nc.ibublig.catalogsb.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -53,5 +54,13 @@ public class AppRoleDAO extends JdbcDaoSupport {
                 + " SET role_id = ?"
                 + " WHERE user_id = ?";
         this.getJdbcTemplate().update(sql, params);
+    }
+
+    public Map<String,String> getListUserRole() {
+        String sql = "SELECT user_id, role_id FROM user_role";
+        String test = this.getJdbcTemplate().queryForObject(sql,String.class);
+        System.out.println(test);
+        Map<String, String> roles = null;
+        return roles;
     }
 }

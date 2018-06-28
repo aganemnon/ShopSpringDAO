@@ -7,6 +7,8 @@ import ru.nc.ibublig.catalogsb.mapper.ItemMapper;
 import ru.nc.ibublig.catalogsb.model.Item;
 
 import javax.sql.DataSource;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -77,5 +79,19 @@ public class ItemDAO extends JdbcDaoSupport {
         String sql = "DELETE FROM item WHERE id = ?";
         Object[] params = new Object[]{itemId};
         this.getJdbcTemplate().update(sql,params);
+    }
+
+    public void setNewCategoryById(Long categoryId, String newCategory) {
+        String sql = "UPDATE item SET category_id = ? WHERE category_id = ?";
+        Object[] params = new Object[]{newCategory, categoryId};
+        this.getJdbcTemplate().update(sql, params);
+    }
+
+    public List<Item> getByName(String name) {
+        String sql = "SELECT * FROM item WHERE name LIKE ?";
+        Object[] params = new Object[]{"%"+name+"%"};
+        ItemMapper itemMapper = new ItemMapper();
+        List<Item> items = this.getJdbcTemplate().query(sql, params, itemMapper);
+        return items;
     }
 }
