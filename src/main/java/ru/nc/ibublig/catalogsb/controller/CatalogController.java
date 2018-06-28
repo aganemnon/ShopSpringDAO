@@ -48,6 +48,16 @@ public class CatalogController {
         model.put("categories", categories);
         return "catalog";
     }
+    @PostMapping("/catalog/{categoryId}")
+    public String find(@PathVariable Long categoryId,
+                       @RequestParam String name,
+                       @RequestParam Long price,
+                       @RequestParam String description,
+                       Map<String, Object> model){
+        model.put("items", itemDAO.getByName(categoryId, name,price*100, description));
+        model.put("categories", categoryDAO.list());
+        return "catalog";
+    }
     @PostMapping("/catalog")
     public String find(@RequestParam String name,
                        @RequestParam Long price,

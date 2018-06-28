@@ -99,4 +99,17 @@ public class ItemDAO extends JdbcDaoSupport {
         List<Item> items = this.getJdbcTemplate().query(sql, params, itemMapper);
         return items;
     }
+
+    public Object getByName(Long categoryId, String name, Long price, String description) {
+        String sql = "SELECT * FROM item WHERE name LIKE ? AND description LIKE ? AND category_id = ? AND cost BETWEEN 0 AND ?";
+        Object[] params = new Object[]{
+                "%"+name+"%",
+                "%"+description+"%",
+                categoryId,
+                price};
+        ItemMapper itemMapper = new ItemMapper();
+
+        List<Item> items = this.getJdbcTemplate().query(sql, params, itemMapper);
+        return items;
+    }
 }
