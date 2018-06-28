@@ -3,6 +3,11 @@
 
 <@c.page>
     <h5>Edit User</h5>
+<#if error??>
+    <div class="alert alert-danger" role="alert">
+        ${error}
+    </div>
+</#if>
 <form method="post" action="/userlist">
     <div class="form-group">
         <label>Username</label>

@@ -10,6 +10,7 @@ import ru.nc.ibublig.catalogsb.model.AppUser;
 import ru.nc.ibublig.catalogsb.utils.EncrytedPasswordUtils;
 
 import javax.sql.DataSource;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Repository

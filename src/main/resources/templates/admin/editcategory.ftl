@@ -2,7 +2,7 @@
 
 
 <@c.page>
-  <form method="post">
+  <form action="/cataloglist/editcategory/${category.id}" method="post">
       <div class="input-group mb-3">
           <input type="text" name="name" class="form-control sm-8" value="${category.name}">
           <div class="input-group-append">
@@ -13,7 +13,7 @@
       </div>
   </form>
 <form action="/cataloglist/editcategory/remove/${category.id}" method="post">
-    <p>Удалеть категорию</p>
+    <p>Удалить категорию</p>
     <p>Выберите категорию куда будет перемещен удаленный товар</p>
                     <#if error_r??>
                         <div class="alert alert-danger" role="alert">
@@ -27,7 +27,7 @@
         <select name="newCategory" class="custom-select">
             <option selected value="-1">Choose...</option>
             <#list categories as category1>
-                <option value="${category1.id}">${category1.name}</option>
+                <#if category.id != category1.id><option value="${category1.id}">${category1.name}</option></#if>
             </#list>
         </select>
     </div>
