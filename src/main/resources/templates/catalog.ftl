@@ -4,19 +4,26 @@
 <@c.page>
 <h5>Категории</h5>
 <div class="btn-group mb-1" role="group">
+    <a class="btn" href="/catalog/">Все категории</a>
     <#list categories as category>
         <a class="btn" href="/catalog/${category.id}">${category.name}</a>
     </#list>
 </div>
 <form method="post">
-    <input type="hidden" value="${_csrf.token}" name="_csrf">
-    <h5>Поиск</h5>
-    <div class="input-group mb-3">
-        <input type="text" name="name" class="form-control" placeholder="Название товара">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit">Поиск</button>
-        </div>
+    <div class="form-group">
+        <label>Название товара</label>
+        <input type="text" class="form-control" name="name" placeholder="Название товара">
     </div>
+    <div class="form-group">
+        <label>Описание товара</label>
+        <input type="text" class="form-control" name="description" placeholder="Описание товара">
+    </div>
+    <div class="form-group">
+        <label>Цена(0-10000)</label>
+        <input type="range" class="form-control-range" name="price" min="0" max="10000">
+    </div>
+    <input type="hidden" value="${_csrf.token}" name="_csrf">
+    <button type="submit" class="btn btn-primary">Поиск</button>
 </form>
 
    <div class="card-columns">

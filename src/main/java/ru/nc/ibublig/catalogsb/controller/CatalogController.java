@@ -49,8 +49,11 @@ public class CatalogController {
         return "catalog";
     }
     @PostMapping("/catalog")
-    public String find(@RequestParam String name, Map<String, Object> model){
-        model.put("items", itemDAO.getByName(name));
+    public String find(@RequestParam String name,
+                       @RequestParam Long price,
+                       @RequestParam String description,
+                       Map<String, Object> model){
+        model.put("items", itemDAO.getByName(name,price*100, description));
         model.put("categories", categoryDAO.list());
         return "catalog";
     }

@@ -22,7 +22,6 @@ public class UserListController {
     @GetMapping
     public String userList(Map<String,Object> model){
         model.put("users", appUserDAO.listUserAccount());
-        //model.put("user_role",roleDAO.getListUserRole());
         return "admin/userlist";
     }
     @GetMapping("{userId}")

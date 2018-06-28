@@ -9,7 +9,6 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Login</th>
-            <th scope="col">Role</th>
             <th scope="col">Options</th>
         </tr>
         </thead>
@@ -18,7 +17,6 @@
             <tr>
                 <th scope="row">${user.userId}</th>
                 <td>${user.userName}</td>
-                <td>${user.r}</td>
                 <td><a href="/userlist/${user.userId}">Edit User</a></td>
             </tr>
             </#list>

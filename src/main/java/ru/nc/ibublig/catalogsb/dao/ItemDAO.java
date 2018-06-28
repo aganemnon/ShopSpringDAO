@@ -87,10 +87,15 @@ public class ItemDAO extends JdbcDaoSupport {
         this.getJdbcTemplate().update(sql, params);
     }
 
-    public List<Item> getByName(String name) {
-        String sql = "SELECT * FROM item WHERE name LIKE ?";
-        Object[] params = new Object[]{"%"+name+"%"};
+    public List<Item> getByName(String name, Long price, String description) {
+
+        String sql = "SELECT * FROM item WHERE name LIKE ? AND description LIKE ? AND cost BETWEEN 0 AND ?";
+        Object[] params = new Object[]{
+                "%"+name+"%",
+                "%"+description+"%",
+                price};
         ItemMapper itemMapper = new ItemMapper();
+
         List<Item> items = this.getJdbcTemplate().query(sql, params, itemMapper);
         return items;
     }
